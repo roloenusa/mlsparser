@@ -50,4 +50,7 @@ end
 group :production do
   # Postgress database adapter for heroku.
   gem 'pg'
+  gem 'rails_12factor'
 end
+
+ruby "2.2.0"
