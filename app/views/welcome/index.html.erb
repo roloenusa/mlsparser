@@ -1,0 +1,10 @@
+<div>
+  Welcome!
+</div>
+<div>
+  Please enter the url provided by the realtor:
+</div>
+<%= form_tag("/parse", method: "get") do %>
+  <input type="text" name="url" />
+  <%= submit_tag("Submit") %>
+<% end %>

@@ -1,0 +1,18 @@
+<div>
+  Please enter the url provided by the realtor:
+</div>
+<%= form_tag("/parse", method: "get") do %>
+  <input type="text" name="url" />
+  <%= submit_tag("Submit") %>
+<% end %>
+
+<hr />
+
+<div>
+  Your results:
+</div>
+<div>
+  <% @listings.each do |mls, url| %>
+  <div><%= link_to mls, url  %></div>
+  <% end %>
+</div>

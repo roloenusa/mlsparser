@@ -1,6 +1,11 @@
 class WelcomeController < ApplicationController
 
   def index
-    render :json => "hello world"
+    render "index"
+  end
+
+  def parse
+    @listings = MlsParser::parse(params["url"])
+    render "parse"
   end
 end
