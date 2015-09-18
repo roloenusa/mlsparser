@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :pitis
   resources :listings
   resources :listings
   root 'welcome#index'

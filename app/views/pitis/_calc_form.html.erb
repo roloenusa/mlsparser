@@ -1,0 +1,45 @@
+<%= form_for(@piti, html: { class: 'form-inline'}) do |f| %>
+  <% if @piti.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@piti.errors.count, "error") %> prohibited this piti from being saved:</h2>
+
+      <ul>
+      <% @piti.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :listing_id %><br>
+    <%= f.text_field :listing_id %>
+  </div>
+  <div class="form-group">
+    <%= f.label :price %><br>
+    <%= f.number_field :price %>
+  </div>
+  <div class="form-group">
+    <%= f.label :down %><br>
+    <%= f.number_field :down %>
+  </div>
+  <div class="form-group">
+    <%= f.label :interest %><br>
+    <%= f.text_field :interest %>
+  </div>
+  <div class="form-group">
+    <%= f.label :maturity %><br>
+    <%= f.text_field :maturity %>
+  </div>
+  <div class="form-group">
+    <%= f.label :tax %><br>
+    <%= f.text_field :tax %>
+  </div>
+  <div class="form-group">
+    <%= f.label :insurance %><br>
+    <%= f.number_field :insurance %>
+  </div>
+  <div class="actions form-group">
+    <%= f.submit %>
+  </div>
+<% end %>

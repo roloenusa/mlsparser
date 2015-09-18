@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Listing:</strong>
+  <%= @piti.listing %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @piti.price %>
+</p>
+
+<p>
+  <strong>Down:</strong>
+  <%= @piti.down %>
+</p>
+
+<p>
+  <strong>Interest:</strong>
+  <%= @piti.interest %>
+</p>
+
+<p>
+  <strong>Maturity:</strong>
+  <%= @piti.maturity %>
+</p>
+
+<p>
+  <strong>Tax:</strong>
+  <%= @piti.tax %>
+</p>
+
+<p>
+  <strong>Insurance:</strong>
+  <%= @piti.insurance %>
+</p>
+
+<%= render 'calc_form' %>
+
+<%= link_to 'Edit', edit_piti_path(@piti) %> |
+<%= link_to 'Back', pitis_path %>

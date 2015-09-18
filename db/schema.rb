@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150918055248) do
+ActiveRecord::Schema.define(version: 20150918062650) do
 
   create_table "listings", force: :cascade do |t|
     t.string   "mls"
@@ -23,5 +23,19 @@ ActiveRecord::Schema.define(version: 20150918055248) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "pitis", force: :cascade do |t|
+    t.integer  "listing_id"
+    t.integer  "price"
+    t.integer  "down"
+    t.float    "interest"
+    t.integer  "maturity"
+    t.float    "tax"
+    t.integer  "insurance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "pitis", ["listing_id"], name: "index_pitis_on_listing_id"
 
 end

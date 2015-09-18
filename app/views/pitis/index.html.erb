@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pitis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Listing</th>
+      <th>Price</th>
+      <th>Down</th>
+      <th>Interest</th>
+      <th>Maturity</th>
+      <th>Tax</th>
+      <th>Insurance</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pitis.each do |piti| %>
+      <tr>
+        <td><%= piti.listing %></td>
+        <td><%= piti.price %></td>
+        <td><%= piti.down %></td>
+        <td><%= piti.interest %></td>
+        <td><%= piti.maturity %></td>
+        <td><%= piti.tax %></td>
+        <td><%= piti.insurance %></td>
+        <td><%= link_to 'Show', piti %></td>
+        <td><%= link_to 'Edit', edit_piti_path(piti) %></td>
+        <td><%= link_to 'Destroy', piti, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Piti', new_piti_path %>
