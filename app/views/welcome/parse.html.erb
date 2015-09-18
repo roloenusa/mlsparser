@@ -12,7 +12,15 @@
   Your results:
 </div>
 <div>
-  <% @listings.each do |mls, url| %>
-  <div><%= link_to mls, url  %></div>
+  <% @listings.each do |mls| %>
+  <div>
+    <%= form_tag("/listings", method: "post") do %>
+      <%= link_to mls[:mls], MlsParser.link(mls) %>
+      <%= hidden_field_tag('listing[mls]', mls[:mls]) %>
+      <%= hidden_field_tag('listing[gui]', mls[:gui]) %>
+      <%= hidden_field_tag('listing[target]', mls[:target]) %>
+      <%= submit_tag("add") %>
+    <% end %>
+  </div>
   <% end %>
 </div>

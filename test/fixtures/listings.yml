@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mls: MyString
+  address: MyString
+  price: 1
+  sqft: 1
+  gui: MyString
+  target: MyString
+
+two:
+  mls: MyString
+  address: MyString
+  price: 1
+  sqft: 1
+  gui: MyString
+  target: MyString

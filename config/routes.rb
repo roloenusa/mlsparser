@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :listings
+  resources :listings
   root 'welcome#index'
 
   get 'parse' => 'welcome#parse'
