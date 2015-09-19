@@ -2,7 +2,7 @@
 
 <h1>Listing Listings</h1>
 
-<table>
+<!-- <table>
   <thead>
     <tr>
       <th>Mls</th>
@@ -27,7 +27,59 @@
       </tr>
     <% end %>
   </tbody>
-</table>
+</table> -->
+
+<div class="container-fluid" ng-controller="ngPitiCtrl">
+<% @listings.each do |listing| %>
+
+  <div class="row">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= listing.mls %></h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-md-1">
+          <button type="button" ng-click="piti_<%= listing.id %> = !piti_<%= listing.id %>">
+            <span ng-class="(!piti_<%= listing.id %>) ? 'glyphicon glyphicon glyphicon-menu-right' : 'glyphicon glyphicon-menu-down'"></span>
+          </button>
+        </div>
+        <div class="col-md-1"><input type="button" value="+" ng-click="addPiti(<%= listing.id %>)"/></div>
+        <div class="col-md-3">Address: <%= listing.address %></div>
+        <div class="col-md-3">Price: <%= listing.price %></div>
+        <div class="col-md-2">Sqft: <%= listing.sqft %></div>
+        <div class="col-md-1"><%= link_to 'Show', listing %></div>
+        <div class="col-md-1"><%= link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' } %></div>
+      </div>
+
+      <!-- Table -->
+      <table class="table" ng-show="piti_<%= listing.id %>">
+        <tr>
+          <th>Price</th>
+          <th>Down</th>
+          <th>Interest</th>
+          <th>Maturity</th>
+          <th>Insurance</th>
+          <th>Tax</th>
+          <th>Final Payment</th>
+          <th></th>
+        </tr>
+        <tr ng-repeat="piti in pitis[<%= listing.id %>]">
+          <td class="col-md-2"><input type="text" ng-model="piti.price"/></td>
+          <td class="col-md-2"><input type="text" ng-model="piti.down" /></td>
+          <td class="col-md-1">{{ piti.interest || interest }}%</td>
+          <td class="col-md-1">{{ piti.maturity || maturity }}</td>
+          <td class="col-md-1">{{ piti.insurance || insurance }}</td>
+          <td class="col-md-1">{{ piti.tax || tax }}%</td>
+          <td class="col-md-2">{{ calculatedPayment(piti) | number: 2}}</td>
+          <td class="col-md-2"><input type="button" value="Save" ng-click="update(piti)" /></td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+
+<% end %>
+</div>
 
 <br>
 

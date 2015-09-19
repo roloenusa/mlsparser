@@ -5,6 +5,11 @@ class PitisController < ApplicationController
   # GET /pitis.json
   def index
     @pitis = Piti.all
+
+    respond_to do |format|
+      format.html { render index: @pitis }
+      format.json { render json: @pitis }
+    end
   end
 
   # GET /pitis/1
@@ -58,6 +63,24 @@ class PitisController < ApplicationController
     respond_to do |format|
       format.html { redirect_to pitis_url, notice: 'Piti was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /pitis/default
+  # GET /pitis/default.json
+  def default
+    data = {
+      default: Piti.build,
+      tax: Piti::TAX,
+      insurance: Piti::INSURANCE,
+      maturity: Piti::MATURITY,
+      interest: Piti::INTEREST
+    }
+
+
+    respond_to do |format|
+      format.html { redirect_to pitis_url, notice: 'Piti was successfully destroyed.' }
+      format.json { render json: data, status: :ok }
     end
   end
 

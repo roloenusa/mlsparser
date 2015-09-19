@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  resources :pitis
-  resources :listings
+  resources :pitis do
+    collection do
+      get 'default'
+    end
+  end
+
   resources :listings
   root 'welcome#index'
 

@@ -5,6 +5,11 @@ class ListingsController < ApplicationController
   # GET /listings.json
   def index
     @listings = Listing.all
+
+    respond_to do |format|
+      format.html { render index: @listings}
+      format.json { render json: @listings }
+    end
   end
 
   # GET /listings/1
