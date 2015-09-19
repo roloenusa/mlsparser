@@ -46,20 +46,32 @@ angular.module('ngMls', [])
 
   $scope.update = function(piti) {
 
-    $http({ method: 'PUT', url: '/pitis/'+piti.id+'.json', data: {'piti': piti} }).
-    then(function(response) {
-      // Request succeded
-    }, function(response) {
-      // Request failed
-    });
+    if(piti.id) {
+      $http({ method: 'PUT', url: '/pitis/'+piti.id+'.json', data: {'piti': piti} }).
+      then(function(response) {
+        // Request succeded
+      }, function(response) {
+        // Request failed
+      });
+    } else {
+      console.log("doing post");
+      $http({ method: 'POST', url: '/pitis.json', data: {'piti': piti} }).
+      then(function(response) {
+        // Request succeded
+      }, function(response) {
+        // Request failed
+      });
+    }
   };
 
   $scope.addPiti = function(id) {
     if(!$scope.pitis[id]) {
       $scope.pitis[id] = [];
     }
-  
-    $scope.pitis[id].push(angular.copy($scope.default));
+
+    var piti = angular.copy($scope.default)
+    piti.listing_id = id;
+    $scope.pitis[id].push(piti);
   };
 
   $scope.fetch_default();
