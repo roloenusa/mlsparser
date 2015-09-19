@@ -20,6 +20,7 @@ angular.module('ngMls', [])
     then(function(response) {
       // $scope.pitis = response.data;
 
+      console.log(response.data);
       angular.forEach(response.data, function(entry) {
         if(!$scope.pitis[entry.listing_id]) {
           $scope.pitis[entry.listing_id] = [];
@@ -54,6 +55,10 @@ angular.module('ngMls', [])
   };
 
   $scope.addPiti = function(id) {
+    if(!$scope.pitis[id]) {
+      $scope.pitis[id] = [];
+    }
+  
     $scope.pitis[id].push(angular.copy($scope.default));
   };
 
