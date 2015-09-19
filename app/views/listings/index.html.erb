@@ -50,6 +50,7 @@
         <div class="col-md-3">Price: <%= listing.price %></div>
         <div class="col-md-2">Sqft: <%= listing.sqft %></div>
         <div class="col-md-1"><%= link_to 'Show', listing %></div>
+        <div class="col-md-1"><%= link_to 'MLS', MlsParser.link({gui: listing.gui, target: listing.target}) %></div>
         <div class="col-md-1"><%= link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' } %></div>
       </div>
 
