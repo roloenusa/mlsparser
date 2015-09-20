@@ -20,14 +20,31 @@ module MlsParser
     doc.xpath("//td/a").each do |link|
         target = link["onclick"].split("'")[1]
 
-        listings << {
+        mls = {
           gui: gui,
           target: target,
           mls: link.text
-          }
+        }
+        mls.merge!(self.parse_house(self.link(mls)));
+        listings << mls
     end
 
     return listings
+  end
+
+  def self.parse_house(url)
+    doc = Nokogiri::HTML(open(url)).xpath("//div")
+    # doc.each_with_index do |v, i|
+    #   puts "#{i}: #{v.text}"
+    # end
+
+
+    data = {
+      address: "#{doc[98].text}, #{doc[99].text}, #{doc[100].text}",
+      price: doc[102].text.gsub(/[\D]/, '').to_i,
+      sqft: doc[134].text.to_i
+    }
+    return data
   end
 
   def self.link(info)

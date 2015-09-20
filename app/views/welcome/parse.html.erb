@@ -1,26 +1,45 @@
-<div>
+<h5>
   Please enter the url provided by the realtor:
+</h5>
+
+<div>
+  <%= form_tag("/parse", method: "get", class: "form-inline") do %>
+    <div class="form-group">
+      <input type="text" name="url" class="form-control" />
+    </div>
+    <%= submit_tag("Submit", class: "btn btn-default") %>
+  <% end %>
 </div>
-<%= form_tag("/parse", method: "get") do %>
-  <input type="text" name="url" />
-  <%= submit_tag("Submit") %>
-<% end %>
 
 <hr />
 
-<div>
-  Your results:
-</div>
-<div>
-  <% @listings.each do |mls| %>
-  <div>
-    <%= form_tag("/listings", method: "post") do %>
-      <%= link_to mls[:mls], MlsParser.link(mls) %>
-      <%= hidden_field_tag('listing[mls]', mls[:mls]) %>
-      <%= hidden_field_tag('listing[gui]', mls[:gui]) %>
-      <%= hidden_field_tag('listing[target]', mls[:target]) %>
-      <%= submit_tag("add") %>
+<h3>Your results:</h3>
+
+<div class="container">
+  <div class="list-group">
+    <div class="row list-group-item active">
+      <div class="col-md-2"><strong>MLS Link</strong></div>
+      <div class="col-md-5"><strong>Address</strong></div>
+      <div class="col-md-2"><strong>Square Footage</strong></div>
+      <div class="col-md-2"><strong>Price</strong></div>
+      <div class="col-md-1"></div>
+    </div>
+    <% @listings.each do |mls| %>
+    <div class="row list-group-item">
+      <%= form_tag("/listings", method: "post") do %>
+        <%= hidden_field_tag('listing[mls]', mls[:mls]) %>
+        <%= hidden_field_tag('listing[gui]', mls[:gui]) %>
+        <%= hidden_field_tag('listing[target]', mls[:target]) %>
+        <%= hidden_field_tag('listing[address]', mls[:address]) %>
+        <%= hidden_field_tag('listing[price]', mls[:price]) %>
+        <%= hidden_field_tag('listing[sqft]', mls[:sqft]) %>
+        <div class="col-md-2"><%= link_to mls[:mls], MlsParser.link(mls) %></div>
+        <div class="col-md-5"><%= mls[:address] %></div>
+        <div class="col-md-2"><%= mls[:sqft] %> ft.</div>
+        <div class="col-md-2">$<%= mls[:price] %></div>
+        <div class="col-md-1"><%= submit_tag("add", class: 'btn btn-primary btn-xs') %></div>
+      <% end %>
+    </div>
     <% end %>
   </div>
-  <% end %>
 </div>
