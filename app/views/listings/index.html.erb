@@ -30,61 +30,85 @@
 </table> -->
 
 <div class="container-fluid" ng-controller="ngPitiCtrl">
-<% @listings.each do |listing| %>
+  <% @listings.each do |listing| %>
 
-  <div class="row">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= listing.mls %></h3>
+  <div class="panel panel-primary">
+    <div class="panel-body">
+      <div class="col-md-1">
+        <button type="button" ng-click="piti_<%= listing.id %> = !piti_<%= listing.id %>" class="btn btn-link btn-xs">
+          <span ng-class="(!piti_<%= listing.id %>) ? 'glyphicon glyphicon-menu-right' : 'glyphicon glyphicon-menu-down'"></span>
+        </button>
       </div>
-      <div class="panel-body">
-        <div class="col-md-1">
-          <div class="input-group-btn">
-            <button type="button" ng-click="piti_<%= listing.id %> = !piti_<%= listing.id %>" class="btn btn-default btn-xs">
-              <span ng-class="(!piti_<%= listing.id %>) ? 'glyphicon glyphicon glyphicon-menu-right' : 'glyphicon glyphicon-menu-down'"></span>
-            </button>
-            <button type="button" ng-click="addPiti(<%= listing.id %>)" class="btn btn-default btn-xs">+</button>
-          </div>
-        </div>
-        <div class="col-md-3">Address: <%= listing.address %></div>
-        <div class="col-md-3">Price: <%= listing.price %></div>
-        <div class="col-md-2">Sqft: <%= listing.sqft %></div>
-        <div class="col-md-3">
-          <%= link_to 'Show', listing %>
-          <%= link_to 'MLS', MlsParser.link({gui: listing.gui, target: listing.target}) %>
-          <%= link_to 'Edit', edit_listing_path(listing) %>
-          <%= link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' } %>
-        </div>
+      <div class="col-md-2"><%= listing.mls %></div>
+      <div class="col-md-3"><%= (listing.address || '').titleize %></div>
+      <div class="col-md-1"><%= listing.sqft %> ft.</div>
+      <div class="col-md-3"><%= number_to_currency(listing.price) %></div>
+      <div class="col-md-2">
+        <%= link_to(MlsParser.link({ mls: listing.mls, gui: listing.gui, target: listing.target })) do %>
+          <span class="glyphicon glyphicon-link"></span>
+        <% end %>
+        <%= link_to(listing) do %>
+          <span class="glyphicon glyphicon-file"></span>
+        <% end %>
+        <%= link_to(edit_listing_path(listing)) do %>
+          <span class="glyphicon glyphicon-edit"></span>
+        <% end %>
+        <%= link_to(listing, method: :delete, data: { confirm: 'Are you sure?' }) do %>
+          <span class="glyphicon glyphicon-trash"></span>
+        <% end %>
       </div>
-
-      <!-- Table -->
-      <table class="table" ng-show="piti_<%= listing.id %>">
-        <tr>
-          <th>Price</th>
-          <th>Down</th>
-          <th>Interest</th>
-          <th>Maturity</th>
-          <th>Insurance</th>
-          <th>Tax</th>
-          <th>Final Payment</th>
-          <th></th>
-        </tr>
-        <tr ng-repeat="piti in pitis[<%= listing.id %>]">
-          <td class="col-md-2"><input type="text" ng-model="piti.price"/></td>
-          <td class="col-md-2"><input type="text" ng-model="piti.down" /></td>
-          <td class="col-md-1">{{ piti.interest || interest }}%</td>
-          <td class="col-md-1">{{ piti.maturity || maturity }}</td>
-          <td class="col-md-1">{{ piti.insurance || insurance }}</td>
-          <td class="col-md-1">{{ piti.tax || tax }}%</td>
-          <td class="col-md-2">{{ calculatedPayment(piti) | number: 2}}</td>
-          <td class="col-md-2"><input type="button" value="Save" ng-click="update(piti)" /></td>
-        </tr>
-      </table>
-
     </div>
-  </div>
 
-<% end %>
+    <!-- Table -->
+    <table class="table table-stripped" ng-show="piti_<%= listing.id %>">
+      <tr>
+        <th>
+          <button type="button" ng-click="addPiti(<%= listing.id %>)" class="btn btn-link btn-xs">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+        </th>
+        <th>Price</th>
+        <th>Down</th>
+        <th>Interest</th>
+        <th>Maturity</th>
+        <th>Insurance</th>
+        <th>Tax</th>
+        <th>Final Payment</th>
+        <th></th>
+      </tr>
+      <tr ng-repeat="piti in pitis[<%= listing.id %>]">
+        <td></td>
+        <td class="col-md-2">
+          <div class="input-group input-group-sm">
+            <span class="input-group-addon" id="sizing-addon1">$</span>
+            <input type="text" class="form-control" placeholder="Price" ng-model="piti.price" size="3" />
+          </div>
+        </td>
+        <td class="col-md-2">
+          <div class="input-group input-group-sm">
+            <span class="input-group-addon" id="sizing-addon1">$</span>
+            <input type="text" class="form-control" placeholder="Down Payment" ng-model="piti.down" size="30" />
+          </div>
+        </td>
+        <td class="col-md-2">
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" placeholder="Interests" ng-model="piti.interest || interest" size="7" />
+            <span class="input-group-addon" >%</span>
+          </div>
+        </td>
+        <td class="col-md-1">{{ piti.maturity || maturity }}</td>
+        <td class="col-md-1">{{ piti.insurance || insurance }}</td>
+        <td class="col-md-1">{{ piti.tax || tax }}%</td>
+        <td class="col-md-2">${{ calculatedPayment(piti) | number: 2}}</td>
+        <td class="col-md-1">
+          <button ng-click="update(piti)" class="btn btn-link">
+            <span class="glyphicon glyphicon-floppy-disk"></sm>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <% end %>
 </div>
 
 <br>

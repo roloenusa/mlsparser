@@ -36,7 +36,7 @@
         <div class="col-md-2"><%= link_to mls[:mls], MlsParser.link(mls) %></div>
         <div class="col-md-5"><%= mls[:address] %></div>
         <div class="col-md-2"><%= mls[:sqft] %> ft.</div>
-        <div class="col-md-2">$<%= mls[:price] %></div>
+        <div class="col-md-2">$<%= number_to_currency(mls[:price]) %></div>
         <div class="col-md-1"><%= submit_tag("add", class: 'btn btn-primary btn-xs') %></div>
       <% end %>
     </div>
