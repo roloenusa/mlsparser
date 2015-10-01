@@ -76,8 +76,12 @@
         <th>Final Payment</th>
         <th></th>
       </tr>
-      <tr ng-repeat="piti in pitis[<%= listing.id %>]">
-        <td></td>
+      <tr ng-repeat="piti in pitis[<%= listing.id %>]" ng-class="{'bg-success': piti.saved}">
+        <td>
+          <div ng-show="piti.saved" class="saved fadein fadeout">
+            <i class="fa fa-check"></i>
+          </div>
+        </td>
         <td class="col-md-2">
           <div class="input-group input-group-sm">
             <span class="input-group-addon" id="sizing-addon1">$</span>
@@ -92,7 +96,7 @@
         </td>
         <td class="col-md-2">
           <div class="input-group input-group-sm">
-            <input type="text" class="form-control" placeholder="Interests" ng-model="piti.interest || interest" size="7" />
+            <input type="text" class="form-control" placeholder="Interests" ng-model="piti.interest" size="7" />
             <span class="input-group-addon" >%</span>
           </div>
         </td>

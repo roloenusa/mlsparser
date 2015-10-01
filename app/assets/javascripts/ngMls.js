@@ -1,5 +1,5 @@
-angular.module('ngMls', [])
-.controller('ngPitiCtrl', ['$scope', '$http', function($scope, $http) {
+angular.module('ngMls', ['ngAnimate'])
+.controller('ngPitiCtrl', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
 
   $scope.fetch_default = function() {
     $http({ method: 'GET', url: '/pitis/default.json' }).
@@ -20,7 +20,6 @@ angular.module('ngMls', [])
     then(function(response) {
       // $scope.pitis = response.data;
 
-      console.log(response.data);
       angular.forEach(response.data, function(entry) {
         if(!$scope.pitis[entry.listing_id]) {
           $scope.pitis[entry.listing_id] = [];
@@ -45,23 +44,28 @@ angular.module('ngMls', [])
   };
 
   $scope.update = function(piti) {
-
+    var req;
     if(piti.id) {
-      $http({ method: 'PUT', url: '/pitis/'+piti.id+'.json', data: {'piti': piti} }).
-      then(function(response) {
-        // Request succeded
-      }, function(response) {
-        // Request failed
-      });
+      req = $http({ method: 'PUT', url: '/pitis/'+piti.id+'.json', data: {'piti': piti} });
     } else {
       console.log("doing post");
-      $http({ method: 'POST', url: '/pitis.json', data: {'piti': piti} }).
-      then(function(response) {
-        // Request succeded
-      }, function(response) {
-        // Request failed
-      });
+      req = $http({ method: 'POST', url: '/pitis.json', data: {'piti': piti} });
     }
+
+    req.then(function(response) {
+      // Simulate 2 seconds loading delay
+      piti.saved = true;
+      $timeout(function() {
+
+        // Loadind done here - Show message for 3 more seconds.
+        $timeout(function() {
+          piti.saved = false;
+        }, 3000);
+
+      }, 2000);
+    }, function(response) {
+      // Request failed
+    });
   };
 
   $scope.addPiti = function(id) {
